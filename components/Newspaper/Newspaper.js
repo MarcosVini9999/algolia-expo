@@ -1,7 +1,23 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View, Linking } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
+import { rate } from "../../stores/features/ratingSlicer";
+import StarRating from "react-native-star-rating";
 
 export const Newspaper = ({ story }) => {
+  const dispatch = useDispatch();
+  const newspapers = useSelector((state) => state.rateNewspaper);
+  const result = newspapers.filter((newspaper) => newspaper.objectID === story.objectID);
+
+  const handleRate = (objectID, stars) => {
+    dispatch(
+      rate({
+        objectID,
+        stars,
+      })
+    );
+  };
+
   return (
     <View style={styles.container}>
       {story ? (
@@ -14,6 +30,11 @@ export const Newspaper = ({ story }) => {
           >
             Link
           </Text>
+          <StarRating
+            maxStars={5}
+            rating={result.length ? result[0].stars : 0}
+            selectedStar={(stars) => handleRate(story.objectID, stars)}
+          />
         </View>
       ) : null}
       <StatusBar style="auto" />

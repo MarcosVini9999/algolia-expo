@@ -1,7 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, View } from "react-native";
-import { NewspaperList } from "./components/NewspaperList/NewspaperList";
-import { Search } from "./components/Search/Search";
+import { NewspaperList } from "../components/NewspaperList/NewspaperList";
+import { Search } from "../components/Search/Search";
 import React from "react";
 
 export default function App() {
