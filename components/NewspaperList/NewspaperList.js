@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, SafeAreaView, Text, ScrollView } from "react-native";
 import React from "react";
 import { Newspaper } from "../Newspaper/Newspaper";
 import { Loading } from "../Loading/Loading";
@@ -24,24 +24,30 @@ export const NewspaperList = ({ searchTerm }) => {
   }, [searchTerm]);
 
   return (
-    <View style={styles.container}>
-      {loading ? (
-        <Loading />
-      ) : stories.length > 0 ? (
-        stories.map((story, index) => <Newspaper story={story} key={index} />)
-      ) : (
-        <Text>Sem Resultado</Text>
-      )}
-      <StatusBar style="auto" />
-    </View>
+    <SafeAreaView style={styles.container}>
+      <ScrollView style={styles.scrollView}>
+        {loading ? (
+          <Loading />
+        ) : stories.length > 0 ? (
+          stories.map((story, index) => <Newspaper story={story} key={index} />)
+        ) : (
+          <Text style={styles.text}>Sem Resultado</Text>
+        )}
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
+    paddingTop: StatusBar.currentHeight,
+    width: "100%",
+  },
+  scrollView: {
+    marginHorizontal: 20,
+  },
+  text: {
+    fontSize: 42,
   },
 });
